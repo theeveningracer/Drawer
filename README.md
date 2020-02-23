@@ -11,3 +11,5 @@ Paper styles included:
 - music sheet
 
 Write any suggestions in Issues
+
+**_Important: You need a Python compiler/interpreter to run this .py file._**
