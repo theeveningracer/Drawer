@@ -32,6 +32,8 @@ rightMargin = IntVar()
 ruleSpacing = IntVar()
 verticalSpacing = IntVar()
 squareGrid = IntVar()
+
+practiceRuleSpacing = IntVar()
  
 
 brushSize = DoubleVar()
@@ -222,36 +224,48 @@ def styleGrid():
     applyButton.pack()
     cancelButton.pack()
 
-def stylePlain():
-    global paperStyle, hasRightMargin, hasLeftMargin, leftMargin, rightMargin
+def stylePractice():
+    global paperStyle, hasRightMargin, hasLeftMargin, leftMargin, rightMargin, practiceRuleSpacing
     
-    def setPlainStyle():
+    def setPracticeStyle():
         global paperStyle
         paintArea.delete("paper")
         setMargins()
-        paperStyle = "plain"
+        paperStyle = "practice"
 
+        _lineIndex = 1
+        for y in range(-1, 1000, practiceRuleSpacing.get()):
+            if _lineIndex == 3:
+                paintArea.create_line(0, y, 3000, y, fill = "black", width = 2, tags = ("paper"))
+                _lineIndex = 1
+            else:
+                paintArea.create_line(0, y, 3000, y, fill = "black", width = 1, tags = ("paper"))
+                _lineIndex += 1
 
-    #define the plain style dialog
+    #define the writing practice style dialog
 
     
-    plainStyleDialog = Toplevel(mainWindow)
-    plainStyleDialog.title("Paper style options")
+    practiceStyleDialog = Toplevel(mainWindow)
+    practiceStyleDialog.title("Paper style options")
 
-    leftMarginCB = Checkbutton(plainStyleDialog, text = "Left Margin", variable = hasLeftMargin)
-    rightMarginCB = Checkbutton(plainStyleDialog, text = "Right Margin", variable = hasRightMargin)
+    leftMarginCB = Checkbutton(practiceStyleDialog, text = "Left Margin", variable = hasLeftMargin)
+    rightMarginCB = Checkbutton(practiceStyleDialog, text = "Right Margin", variable = hasRightMargin)
 
-    leftMarginScale = Scale(plainStyleDialog, label = "Set left margin", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "horizontal", variable = leftMargin)
-    rightMarginScale = Scale(plainStyleDialog, label = "Set right margin", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "horizontal", variable =rightMargin)
+    leftMarginScale = Scale(practiceStyleDialog, label = "Set left margin", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "horizontal", variable = leftMargin)
+    rightMarginScale = Scale(practiceStyleDialog, label = "Set right margin", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "horizontal", variable =rightMargin)
     leftMarginScale.set(20)
     rightMarginScale.set(20)
     leftMarginCB.pack()
     leftMarginScale.pack()
     rightMarginCB.pack()
     rightMarginScale.pack()
+    practiceSpacingSlider = Scale(practiceStyleDialog, label = "Set line spacing", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "horizontal", variable = practiceRuleSpacing)
 
-    cancelButton = Button(plainStyleDialog, text = "Cancel", command =plainStyleDialog.destroy)
-    applyButton = Button(plainStyleDialog, text = "Apply", relief = "raised", bg = "green", command = setPlainStyle)
+    practiceSpacingSlider.pack()
+
+
+    cancelButton = Button(practiceStyleDialog, text = "Cancel", command = practiceStyleDialog.destroy)
+    applyButton = Button(practiceStyleDialog, text = "Apply", relief = "raised", bg = "green", command = setPracticeStyle)
 
     applyButton.pack()
     cancelButton.pack()
@@ -303,6 +317,9 @@ def styleMusic():
     cancelButton.pack()
 
 
+
+
+
 paintArea = Canvas(mainWindow, width = canvasWidth, height = canvasHeight, bg = paperColor)
 paintArea.pack(fill = "both")
 
@@ -332,6 +349,7 @@ styleMenu.add_command(label = "Plain", command = stylePlain)
 styleMenu.add_command(label = "Ruled", command = styleRuled)
 styleMenu.add_command(label = "Grid", command = styleGrid)
 styleMenu.add_command(label = "Music Sheet", command = styleMusic)
+styleMenu.add_command(label = "Writing Practice", command = stylePractice)
 
 actionBar = Menu(mainWindow)
 actionBar.add_command(label = "Clear", command = clear)
