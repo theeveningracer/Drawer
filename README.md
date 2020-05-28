@@ -9,6 +9,7 @@ Paper styles included:
 - ruled
 - grid (square and rectangle)
 - music sheet
+- writing practice sheet
 
 Write any suggestions in Issues
 
