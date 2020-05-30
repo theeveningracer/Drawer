@@ -11,11 +11,11 @@ paperStyle = "plain"
 #set the horizontal rules for both ruled and grid styles
 def setHorizontalRuling(spacing):
     for y in range(0, 800, spacing):
-        paintArea.create_line(0, y, 1000, y, fill = "black", tags = ("paper"))
+        paintArea.create_line(0, y, 5000, y, fill = "black", tags = ("paper"))
 
 #set the vertical ruling for grid
 def setVerticalRuling(spacing):
-    for x in range(0, 1000, spacing):
+    for x in range(0, 2000, spacing):
         paintArea.create_line(x, 0, x, 800, fill = "black", tags = ("paper"))
 
 mainWindow = Tk()
@@ -34,7 +34,7 @@ verticalSpacing = IntVar()
 squareGrid = IntVar()
 
 practiceRuleSpacing = IntVar()
- 
+
 
 brushSize = DoubleVar()
 
@@ -98,7 +98,7 @@ def setPaperGray():
 
 def stylePlain():
     global paperStyle, hasRightMargin, hasLeftMargin, leftMargin, rightMargin
-    
+
     def setPlainStyle():
         global paperStyle
         paintArea.delete("paper")
@@ -108,7 +108,7 @@ def stylePlain():
 
     #define the plain style dialog
 
-    
+
     plainStyleDialog = Toplevel(mainWindow)
     plainStyleDialog.title("Paper style options")
 
@@ -159,10 +159,10 @@ def styleRuled():
     rightMarginCB.pack()
     rightMarginScale.pack()
 
-    
+
 
     # the slider to set rule spacing
-    spacingSlider = Scale(ruledStyleDialog, label = "Set spacing between rules", from_ = 10, to = 60, resolution = 1, tickinterval = 10, orient = "horizontal", variable = ruleSpacing) 
+    spacingSlider = Scale(ruledStyleDialog, label = "Set spacing between rules", from_ = 10, to = 60, resolution = 1, tickinterval = 10, orient = "horizontal", variable = ruleSpacing)
     spacingSlider.pack()
 
     cancelButton = Button(ruledStyleDialog, text = "Cancel", command = ruledStyleDialog.destroy)
@@ -204,10 +204,10 @@ def styleGrid():
     rightMarginCB.pack()
     rightMarginScale.pack()
 
-    
+
 
     # the slider to set horizontal rule spacing
-    horizontalSpacingSlider = Scale(gridStyleDialog, label = "Set horizontal spacing", from_ = 10, to = 60, resolution = 1, tickinterval = 10, orient = "horizontal", variable = ruleSpacing) 
+    horizontalSpacingSlider = Scale(gridStyleDialog, label = "Set horizontal spacing", from_ = 10, to = 60, resolution = 1, tickinterval = 10, orient = "horizontal", variable = ruleSpacing)
     horizontalSpacingSlider.pack()
 
     # the slider to set vertical rule spacing
@@ -226,7 +226,7 @@ def styleGrid():
 
 def stylePractice():
     global paperStyle, hasRightMargin, hasLeftMargin, leftMargin, rightMargin, practiceRuleSpacing
-    
+
     def setPracticeStyle():
         global paperStyle
         paintArea.delete("paper")
@@ -236,15 +236,15 @@ def stylePractice():
         _lineIndex = 1
         for y in range(-1, 1000, practiceRuleSpacing.get()):
             if _lineIndex == 3:
-                paintArea.create_line(0, y, 3000, y, fill = "black", width = 2, tags = ("paper"))
+                paintArea.create_line(0, y, 5000, y, fill = "black", width = 2, tags = ("paper"))
                 _lineIndex = 1
             else:
-                paintArea.create_line(0, y, 3000, y, fill = "black", width = 1, tags = ("paper"))
+                paintArea.create_line(0, y, 5000, y, fill = "black", width = 1, tags = ("paper"))
                 _lineIndex += 1
 
     #define the writing practice style dialog
 
-    
+
     practiceStyleDialog = Toplevel(mainWindow)
     practiceStyleDialog.title("Paper style options")
 
@@ -278,10 +278,10 @@ def styleMusic():
         global paperStyle, sheetSpacingLg, sheetSpacingSm
         paintArea.delete("paper")
         setMargins()
-       
+
         for sheetLineY in range(30, 1000, sheetSpacingLg.get() + (5 * sheetSpacingSm.get())):
             for sheetRuleY in range(sheetLineY, sheetLineY + (sheetSpacingSm.get() * 5), sheetSpacingSm.get()):
-                paintArea.create_line(-800, sheetRuleY, 1000, sheetRuleY, fill = "black", tags = ("paper"))
+                paintArea.create_line(-800, sheetRuleY, 5000, sheetRuleY, fill = "black", tags = ("paper"))
 
         paperStyle = "music"
 
