@@ -20,15 +20,15 @@ marginColors = {
 #set the horizontal rules for both ruled and grid styles
 def setHorizontalRuling(spacing):
     for y in range(0, 800, spacing):
-        paintArea.create_line(0, y, 1000, y, fill = "black", tags = ("paper"))
+        paintArea.create_line(0, y, 3000, y, fill = "black", tags = ("paper"))
 
 #set the vertical ruling for grid
 def setVerticalRuling(spacing):
     for x in range(0, 1000, spacing):
-        paintArea.create_line(x, 0, x, 800, fill = "black", tags = ("paper"))
+        paintArea.create_line(x, 0, x, 1000, fill = "black", tags = ("paper"))
 
 mainWindow = Tk()
-mainWindow.title("Calligraphic Pen Board")
+mainWindow.title("Drawer")
 inkColor = "#020044"
 hasLeftMargin = IntVar()
 hasRightMargin = IntVar()
@@ -44,7 +44,7 @@ squareGrid = IntVar()
 
 practiceRuleSpacing = IntVar()
 
-marginColorInput = StringVar() 
+marginColorInput = StringVar()
 
 brushSize = DoubleVar()
 
@@ -70,7 +70,7 @@ def setMargins():
 def openCredits():
     creditsWindow = Toplevel(mainWindow)
     creditsWindow.title("Credits and license")
-    creditsText = Label(creditsWindow, text = "This program was created in 2020 by Redline Software, a Redline Network company. \n Open source software freely usable for any non-commercial purposes.")
+    creditsText = Label(creditsWindow, text = "Drawer (formerly Calligraphic Paint) is an application created in 2020 by Redline Software, a Redline Network company. \n Open source software freely usable for any non-commercial purposes.")
     creditsText.pack()
 
 def setColorBlue():
@@ -94,21 +94,7 @@ def setColorGreen():
 def setColorOrange():
     global inkColor
     inkColor = "#FF9300"
-def setColorEasterGreen():
-    global inkColor
-    inkColor = "#16E900"
-def setColorEasterPurple():
-    global inkColor
-    inkColor = "#CF00E7"
-def setColorEasterPink():
-    global inkColor
-    inkColor = "#FF49D6"
-def setColorEasterBlue():
-    global inkColor
-    inkColor = "#77EEF2"
-def setColorEasterYellow():
-    global inkColor
-    inkColor = "#F0FF00"
+
 
 
 def setPaperWhite():
@@ -124,19 +110,11 @@ def setPaperGray():
     global paperColor
     paperColor = "#c7c7c7"
     paintArea.config(bg = paperColor)
-def setPaperEasterGreen():
-    global paperColor
-    paperColor = "#17F200"
-    paintArea.config(bg = paperColor)
-def setPaperEasterYellow():
-    global paperColor
-    paperColor = "#F9FF4D"
-    paintArea.config(bg = paperColor)
 
 
 def stylePlain():
     global paperStyle, hasRightMargin, hasLeftMargin, leftMargin, rightMargin
-    
+
     def setPlainStyle():
         global paperStyle, marginColor
         marginColor = marginColors[marginColorInput.get()]
@@ -147,7 +125,7 @@ def stylePlain():
 
     #define the plain style dialog
 
-    
+
     plainStyleDialog = Toplevel(mainWindow)
     plainStyleDialog.title("Paper style options")
 
@@ -208,10 +186,10 @@ def styleRuled():
     marginColorLabel.pack()
     marginColorSelector.pack()
 
-    
+
 
     # the slider to set rule spacing
-    spacingSlider = Scale(ruledStyleDialog, label = "Set spacing between rules", from_ = 10, to = 60, resolution = 1, tickinterval = 10, orient = "horizontal", variable = ruleSpacing) 
+    spacingSlider = Scale(ruledStyleDialog, label = "Set spacing between rules", from_ = 10, to = 60, resolution = 1, tickinterval = 10, orient = "horizontal", variable = ruleSpacing)
     spacingSlider.pack()
 
     cancelButton = Button(ruledStyleDialog, text = "Cancel", command = ruledStyleDialog.destroy)
@@ -257,10 +235,10 @@ def styleGrid():
     marginColorLabel.pack()
     marginColorSelector.pack()
 
-    
+
 
     # the slider to set horizontal rule spacing
-    horizontalSpacingSlider = Scale(gridStyleDialog, label = "Set horizontal spacing", from_ = 10, to = 60, resolution = 1, tickinterval = 10, orient = "horizontal", variable = ruleSpacing) 
+    horizontalSpacingSlider = Scale(gridStyleDialog, label = "Set horizontal spacing", from_ = 10, to = 60, resolution = 1, tickinterval = 10, orient = "horizontal", variable = ruleSpacing)
     horizontalSpacingSlider.pack()
 
     # the slider to set vertical rule spacing
@@ -279,7 +257,7 @@ def styleGrid():
 
 def stylePractice():
     global paperStyle, hasRightMargin, hasLeftMargin, leftMargin, rightMargin, practiceRuleSpacing
-    
+
     def setPracticeStyle():
         global paperStyle
         paintArea.delete("paper")
@@ -289,15 +267,15 @@ def stylePractice():
         _lineIndex = 1
         for y in range(-1, 1000, practiceRuleSpacing.get()):
             if _lineIndex == 3:
-                paintArea.create_line(0, y, 3000, y, fill = "black", width = 2, tags = ("paper"))
+                paintArea.create_line(0, y, 5000, y, fill = "black", width = 2, tags = ("paper"))
                 _lineIndex = 1
             else:
-                paintArea.create_line(0, y, 3000, y, fill = "black", width = 1, tags = ("paper"))
+                paintArea.create_line(0, y, 5000, y, fill = "black", width = 1, tags = ("paper"))
                 _lineIndex += 1
 
     #define the writing practice style dialog
 
-    
+
     practiceStyleDialog = Toplevel(mainWindow)
     practiceStyleDialog.title("Paper style options")
 
@@ -335,7 +313,7 @@ def styleMusic():
         global paperStyle, sheetSpacingLg, sheetSpacingSm
         paintArea.delete("paper")
         setMargins()
-       
+
         for sheetLineY in range(30, 1000, sheetSpacingLg.get() + (5 * sheetSpacingSm.get())):
             for sheetRuleY in range(sheetLineY, sheetLineY + (sheetSpacingSm.get() * 5), sheetSpacingSm.get()):
                 paintArea.create_line(-800, sheetRuleY, 1000, sheetRuleY, fill = "black", tags = ("paper"))
@@ -398,15 +376,7 @@ colorMenu.add_command(label = "Royal Purple", command = setColorPurple)
 colorMenu.add_command(label = "Important Red", command = setColorRed)
 colorMenu.add_command(label = "Natural Green", command = setColorGreen)
 colorMenu.add_command(label = "Fruity Orange", command = setColorOrange)
-"""
-#Wanted to add some Easter colors but they aren't working (unknown reason)
 
-colorMenu.add_command(label = "Spring Green (Easter Edition)", command = "setColorEasterGreen")
-colorMenu.add_command(label = "Bunny Purple (Easter Edition)", command = "setColorEasterPurple")
-colorMenu.add_command(label = "Chocolate Foil Pink (Easter Edition)", command = "setColorEasterPink")
-colorMenu.add_command(label = "Flower Blue (Easter Edition)", command = "setColorEasterBlue")
-colorMenu.add_command(label = "Egg Yellow (Easter Edition)", command = "setColorEasterYellow")
-"""
 
 #sset the paper color and style menus
 paperMenu = Menu(mainWindow, tearoff = False)
