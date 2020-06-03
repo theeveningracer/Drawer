@@ -1,1 +1,1 @@
-Contribute by suggesting features.
+Contribute by writing in or suggesting features.
