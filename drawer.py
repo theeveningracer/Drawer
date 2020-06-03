@@ -132,8 +132,8 @@ def stylePlain():
     leftMarginCB = Checkbutton(plainStyleDialog, text = "Left Margin", variable = hasLeftMargin)
     rightMarginCB = Checkbutton(plainStyleDialog, text = "Right Margin", variable = hasRightMargin)
 
-    leftMarginScale = Scale(plainStyleDialog, label = "Set left margin", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "horizontal", variable = leftMargin)
-    rightMarginScale = Scale(plainStyleDialog, label = "Set right margin", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "horizontal", variable =rightMargin)
+    leftMarginScale = Scale(plainStyleDialog, label = "Set left margin", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "horizontal", variable = leftMargin, length = 150)
+    rightMarginScale = Scale(plainStyleDialog, label = "Set right margin", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "horizontal", variable =rightMargin, length = 150)
     marginColorSelector = OptionMenu(plainStyleDialog, marginColorInput, "Black", "Blue", "Red")
     marginColorLabel = Label(plainStyleDialog, text = "Margin color")
     leftMarginScale.set(20)
@@ -173,8 +173,8 @@ def styleRuled():
     leftMarginCB = Checkbutton(ruledStyleDialog, text = "Left Margin", variable = hasLeftMargin)
     rightMarginCB = Checkbutton(ruledStyleDialog, text = "Right Margin", variable = hasRightMargin)
 
-    leftMarginScale = Scale(ruledStyleDialog, label = "Set left margin", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "horizontal", variable = leftMargin)
-    rightMarginScale = Scale(ruledStyleDialog, label = "Set right margin", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "horizontal", variable =rightMargin)
+    leftMarginScale = Scale(ruledStyleDialog, label = "Set left margin", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "horizontal", variable = leftMargin, length = 150)
+    rightMarginScale = Scale(ruledStyleDialog, label = "Set right margin", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "horizontal", variable =rightMargin, length = 150)
     marginColorSelector = OptionMenu(ruledStyleDialog, marginColorInput, "Black", "Blue", "Red")
     marginColorLabel = Label(ruledStyleDialog, text = "Margin color")
     leftMarginScale.set(20)
@@ -189,7 +189,7 @@ def styleRuled():
 
 
     # the slider to set rule spacing
-    spacingSlider = Scale(ruledStyleDialog, label = "Set spacing between rules", from_ = 10, to = 60, resolution = 1, tickinterval = 10, orient = "horizontal", variable = ruleSpacing)
+    spacingSlider = Scale(ruledStyleDialog, label = "Set spacing between rules", from_ = 10, to = 60, resolution = 1, tickinterval = 10, orient = "vertical", variable = ruleSpacing, length = 140, width = 50)
     spacingSlider.pack()
 
     cancelButton = Button(ruledStyleDialog, text = "Cancel", command = ruledStyleDialog.destroy)
@@ -220,10 +220,10 @@ def styleGrid():
     gridStyleDialog.title("Grid style options")
 
     leftMarginCB = Checkbutton(gridStyleDialog, text = "Left Margin", variable = hasLeftMargin)
-    rightMarginCB = Checkbutton(gridStyleDialog, text = "Right Margin", variable = hasRightMargin)
 
-    leftMarginScale = Scale(gridStyleDialog, label = "Set left margin", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "horizontal", variable = leftMargin)
-    rightMarginScale = Scale(gridStyleDialog, label = "Set right margin", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "horizontal", variable =rightMargin)
+    rightMarginCB = Checkbutton(gridStyleDialog, text = "Right Margin", variable = hasRightMargin)
+    leftMarginScale = Scale(gridStyleDialog, label = "Set left margin", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "horizontal", variable = leftMargin, length = 120)
+    rightMarginScale = Scale(gridStyleDialog, label = "Set right margin", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "horizontal", variable =rightMargin, length = 120)
     marginColorSelector = OptionMenu(gridStyleDialog, marginColorInput, "Black", "Blue", "Red")
     marginColorLabel = Label(gridStyleDialog, text = "Margin color")
     leftMarginScale.set(20)
@@ -238,11 +238,11 @@ def styleGrid():
 
 
     # the slider to set horizontal rule spacing
-    horizontalSpacingSlider = Scale(gridStyleDialog, label = "Set horizontal spacing", from_ = 10, to = 60, resolution = 1, tickinterval = 10, orient = "horizontal", variable = ruleSpacing)
+    horizontalSpacingSlider = Scale(gridStyleDialog, label = "Set horizontal spacing", from_ = 10, to = 60, resolution = 1, tickinterval = 10, orient = "horizontal", variable = ruleSpacing, length = 150, width = 50)
     horizontalSpacingSlider.pack()
 
     # the slider to set vertical rule spacing
-    verticalSpacingSlider = Scale(gridStyleDialog, label = "Set vertical spacing", from_ = 10, to = 60, resolution = 1, tickinterval = 10, orient = "horizontal", variable = verticalSpacing)
+    verticalSpacingSlider = Scale(gridStyleDialog, label = "Set vertical spacing", from_ = 10, to = 60, resolution = 1, tickinterval = 10, orient = "vertical", variable = verticalSpacing, length = 150, width = 50)
 
     squareGridCB = Checkbutton(gridStyleDialog, text = "Square Grid", variable = squareGrid)
 
@@ -282,8 +282,8 @@ def stylePractice():
     leftMarginCB = Checkbutton(practiceStyleDialog, text = "Left Margin", variable = hasLeftMargin)
     rightMarginCB = Checkbutton(practiceStyleDialog, text = "Right Margin", variable = hasRightMargin)
 
-    leftMarginScale = Scale(practiceStyleDialog, label = "Set left margin", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "horizontal", variable = leftMargin)
-    rightMarginScale = Scale(practiceStyleDialog, label = "Set right margin", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "horizontal", variable =rightMargin)
+    leftMarginScale = Scale(practiceStyleDialog, label = "Set left margin", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "horizontal", variable = leftMargin, length = 120)
+    rightMarginScale = Scale(practiceStyleDialog, label = "Set right margin", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "horizontal", variable =rightMargin, length = 120)
     marginColorSelector = OptionMenu(practiceStyleDialog, marginColorInput, "Black", "Blue", "Red")
     marginColorLabel = Label(practiceStyleDialog, text = "Margin color")
     leftMarginScale.set(20)
@@ -294,7 +294,7 @@ def stylePractice():
     rightMarginScale.pack()
     marginColorLabel.pack()
     marginColorSelector.pack()
-    practiceSpacingSlider = Scale(practiceStyleDialog, label = "Set line spacing", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "horizontal", variable = practiceRuleSpacing)
+    practiceSpacingSlider = Scale(practiceStyleDialog, label = "Set line spacing", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "vertical", variable = practiceRuleSpacing, length = 150, width = 50)
 
     practiceSpacingSlider.pack()
 
@@ -329,8 +329,8 @@ def styleMusic():
     leftMarginCB = Checkbutton(musicStyleDialog, text = "Left Margin", variable = hasLeftMargin)
     rightMarginCB = Checkbutton(musicStyleDialog, text = "Right Margin", variable = hasRightMargin)
 
-    leftMarginScale = Scale(musicStyleDialog, label = "Set left margin", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "horizontal", variable = leftMargin)
-    rightMarginScale = Scale(musicStyleDialog, label = "Set right margin", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "horizontal", variable =rightMargin)
+    leftMarginScale = Scale(musicStyleDialog, label = "Set left margin", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "horizontal", variable = leftMargin, length = 150)
+    rightMarginScale = Scale(musicStyleDialog, label = "Set right margin", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "horizontal", variable =rightMargin, length = 150)
     marginColorSelector = OptionMenu(musicStyleDialog, marginColorInput, "Black", "Blue", "Red")
     marginColorLabel = Label(musicStyleDialog, text = "Margin color")
     leftMarginScale.set(20)
@@ -342,10 +342,10 @@ def styleMusic():
     marginColorLabel.pack()
     marginColorSelector.pack()
 
-    largeSpacingScale = Scale(musicStyleDialog, label = "Gap between rows", from_ = 20, to = 70, resolution = 1, tickinterval = 10, orient = "horizontal", variable = sheetSpacingLg)
+    largeSpacingScale = Scale(musicStyleDialog, label = "Gap between rows", from_ = 20, to = 70, resolution = 1, tickinterval = 10, orient = "vertical", variable = sheetSpacingLg, length = 150, width = 50)
     largeSpacingScale.pack()
 
-    smallSpacingScale = Scale(musicStyleDialog, label = "Music rule spacing", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "horizontal", variable = sheetSpacingSm)
+    smallSpacingScale = Scale(musicStyleDialog, label = "Music rule spacing", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "vertical", variable = sheetSpacingSm, length = 150, width = 50)
     smallSpacingScale.pack()
 
 
@@ -383,9 +383,7 @@ paperMenu = Menu(mainWindow, tearoff = False)
 paperMenu.add_command(label = "White Copy", command = setPaperWhite)
 paperMenu.add_command(label = "Antique", command = setPaperAntique)
 paperMenu.add_command(label = "Recycled Gray", command = setPaperGray)
-paperMenu.add_separator()
-paperMenu.add_command(label = "Grass Green (Easter Edition)", command = setPaperEasterGreen)
-paperMenu.add_command(label = "Bright Yellow (Easter Edition)", command = setPaperEasterYellow)
+
 
 styleMenu = Menu(mainWindow, tearoff = False)
 styleMenu.add_command(label = "Plain", command = stylePlain)
