@@ -6,20 +6,29 @@ canvasHeight = 500
 paperColor = "white"
 paperStyle = "plain"
 
+marginColor = "black"
+
+marginColors = {
+    "Black": "black",
+    "Blue": "#009CFF",
+    "Red": "#FF0048"
+}
+
+
 
 
 #set the horizontal rules for both ruled and grid styles
 def setHorizontalRuling(spacing):
     for y in range(0, 800, spacing):
-        paintArea.create_line(0, y, 5000, y, fill = "black", tags = ("paper"))
+        paintArea.create_line(0, y, 1000, y, fill = "black", tags = ("paper"))
 
 #set the vertical ruling for grid
 def setVerticalRuling(spacing):
-    for x in range(0, 2000, spacing):
+    for x in range(0, 1000, spacing):
         paintArea.create_line(x, 0, x, 800, fill = "black", tags = ("paper"))
 
 mainWindow = Tk()
-mainWindow.title("Drawer")
+mainWindow.title("Calligraphic Pen Board")
 inkColor = "#020044"
 hasLeftMargin = IntVar()
 hasRightMargin = IntVar()
@@ -35,6 +44,7 @@ squareGrid = IntVar()
 
 practiceRuleSpacing = IntVar()
 
+marginColorInput = StringVar() 
 
 brushSize = DoubleVar()
 
@@ -47,17 +57,20 @@ def clear():
     paintArea.delete("ink")
 
 def setMargins():
+    global marginColor, marginColorInput
+    if marginColorInput.get() in marginColors:
+        marginColor = marginColors[marginColorInput.get()]
     mainWindow.update()
     canvasWidth = mainWindow.winfo_width()
     if hasLeftMargin.get():
-        paintArea.create_line(leftMargin.get(), 0, leftMargin.get(), 1000, fill = "black", width = 3, tags = ("paper"))
+        paintArea.create_line(leftMargin.get(), 0, leftMargin.get(), 1000, fill = marginColor, width = 3, tags = ("paper"))
     if hasRightMargin.get():
-        paintArea.create_line(canvasWidth - rightMargin.get(), 0, canvasWidth - rightMargin.get(), 1000, fill = "black", width = 3, tags = ("paper"))
+        paintArea.create_line(canvasWidth - rightMargin.get(), 0, canvasWidth - rightMargin.get(), 1000, fill = marginColor, width = 3, tags = ("paper"))
 
 def openCredits():
     creditsWindow = Toplevel(mainWindow)
     creditsWindow.title("Credits and license")
-    creditsText = Label(creditsWindow, text = "Drawer (formerly Calligraphic Paint) is a program created in 2020 by Redline Software, a Redline Network company. \n Open source software freely usable for any non-commercial purposes.")
+    creditsText = Label(creditsWindow, text = "This program was created in 2020 by Redline Software, a Redline Network company. \n Open source software freely usable for any non-commercial purposes.")
     creditsText.pack()
 
 def setColorBlue():
@@ -81,6 +94,22 @@ def setColorGreen():
 def setColorOrange():
     global inkColor
     inkColor = "#FF9300"
+def setColorEasterGreen():
+    global inkColor
+    inkColor = "#16E900"
+def setColorEasterPurple():
+    global inkColor
+    inkColor = "#CF00E7"
+def setColorEasterPink():
+    global inkColor
+    inkColor = "#FF49D6"
+def setColorEasterBlue():
+    global inkColor
+    inkColor = "#77EEF2"
+def setColorEasterYellow():
+    global inkColor
+    inkColor = "#F0FF00"
+
 
 def setPaperWhite():
     global paperColor
@@ -95,12 +124,22 @@ def setPaperGray():
     global paperColor
     paperColor = "#c7c7c7"
     paintArea.config(bg = paperColor)
+def setPaperEasterGreen():
+    global paperColor
+    paperColor = "#17F200"
+    paintArea.config(bg = paperColor)
+def setPaperEasterYellow():
+    global paperColor
+    paperColor = "#F9FF4D"
+    paintArea.config(bg = paperColor)
+
 
 def stylePlain():
     global paperStyle, hasRightMargin, hasLeftMargin, leftMargin, rightMargin
-
+    
     def setPlainStyle():
-        global paperStyle
+        global paperStyle, marginColor
+        marginColor = marginColors[marginColorInput.get()]
         paintArea.delete("paper")
         setMargins()
         paperStyle = "plain"
@@ -108,7 +147,7 @@ def stylePlain():
 
     #define the plain style dialog
 
-
+    
     plainStyleDialog = Toplevel(mainWindow)
     plainStyleDialog.title("Paper style options")
 
@@ -117,15 +156,21 @@ def stylePlain():
 
     leftMarginScale = Scale(plainStyleDialog, label = "Set left margin", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "horizontal", variable = leftMargin)
     rightMarginScale = Scale(plainStyleDialog, label = "Set right margin", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "horizontal", variable =rightMargin)
+    marginColorSelector = OptionMenu(plainStyleDialog, marginColorInput, "Black", "Blue", "Red")
+    marginColorLabel = Label(plainStyleDialog, text = "Margin color")
     leftMarginScale.set(20)
     rightMarginScale.set(20)
     leftMarginCB.pack()
     leftMarginScale.pack()
     rightMarginCB.pack()
     rightMarginScale.pack()
+    marginColorLabel.pack()
+    marginColorSelector.pack()
 
     cancelButton = Button(plainStyleDialog, text = "Cancel", command =plainStyleDialog.destroy)
     applyButton = Button(plainStyleDialog, text = "Apply", relief = "raised", bg = "green", command = setPlainStyle)
+
+
 
     applyButton.pack()
     cancelButton.pack()
@@ -152,17 +197,21 @@ def styleRuled():
 
     leftMarginScale = Scale(ruledStyleDialog, label = "Set left margin", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "horizontal", variable = leftMargin)
     rightMarginScale = Scale(ruledStyleDialog, label = "Set right margin", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "horizontal", variable =rightMargin)
+    marginColorSelector = OptionMenu(ruledStyleDialog, marginColorInput, "Black", "Blue", "Red")
+    marginColorLabel = Label(ruledStyleDialog, text = "Margin color")
     leftMarginScale.set(20)
     rightMarginScale.set(20)
     leftMarginCB.pack()
     leftMarginScale.pack()
     rightMarginCB.pack()
     rightMarginScale.pack()
+    marginColorLabel.pack()
+    marginColorSelector.pack()
 
-
+    
 
     # the slider to set rule spacing
-    spacingSlider = Scale(ruledStyleDialog, label = "Set spacing between rules", from_ = 10, to = 60, resolution = 1, tickinterval = 10, orient = "horizontal", variable = ruleSpacing)
+    spacingSlider = Scale(ruledStyleDialog, label = "Set spacing between rules", from_ = 10, to = 60, resolution = 1, tickinterval = 10, orient = "horizontal", variable = ruleSpacing) 
     spacingSlider.pack()
 
     cancelButton = Button(ruledStyleDialog, text = "Cancel", command = ruledStyleDialog.destroy)
@@ -197,17 +246,21 @@ def styleGrid():
 
     leftMarginScale = Scale(gridStyleDialog, label = "Set left margin", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "horizontal", variable = leftMargin)
     rightMarginScale = Scale(gridStyleDialog, label = "Set right margin", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "horizontal", variable =rightMargin)
+    marginColorSelector = OptionMenu(gridStyleDialog, marginColorInput, "Black", "Blue", "Red")
+    marginColorLabel = Label(gridStyleDialog, text = "Margin color")
     leftMarginScale.set(20)
     rightMarginScale.set(20)
     leftMarginCB.pack()
     leftMarginScale.pack()
     rightMarginCB.pack()
     rightMarginScale.pack()
+    marginColorLabel.pack()
+    marginColorSelector.pack()
 
-
+    
 
     # the slider to set horizontal rule spacing
-    horizontalSpacingSlider = Scale(gridStyleDialog, label = "Set horizontal spacing", from_ = 10, to = 60, resolution = 1, tickinterval = 10, orient = "horizontal", variable = ruleSpacing)
+    horizontalSpacingSlider = Scale(gridStyleDialog, label = "Set horizontal spacing", from_ = 10, to = 60, resolution = 1, tickinterval = 10, orient = "horizontal", variable = ruleSpacing) 
     horizontalSpacingSlider.pack()
 
     # the slider to set vertical rule spacing
@@ -226,7 +279,7 @@ def styleGrid():
 
 def stylePractice():
     global paperStyle, hasRightMargin, hasLeftMargin, leftMargin, rightMargin, practiceRuleSpacing
-
+    
     def setPracticeStyle():
         global paperStyle
         paintArea.delete("paper")
@@ -236,15 +289,15 @@ def stylePractice():
         _lineIndex = 1
         for y in range(-1, 1000, practiceRuleSpacing.get()):
             if _lineIndex == 3:
-                paintArea.create_line(0, y, 5000, y, fill = "black", width = 2, tags = ("paper"))
+                paintArea.create_line(0, y, 3000, y, fill = "black", width = 2, tags = ("paper"))
                 _lineIndex = 1
             else:
-                paintArea.create_line(0, y, 5000, y, fill = "black", width = 1, tags = ("paper"))
+                paintArea.create_line(0, y, 3000, y, fill = "black", width = 1, tags = ("paper"))
                 _lineIndex += 1
 
     #define the writing practice style dialog
 
-
+    
     practiceStyleDialog = Toplevel(mainWindow)
     practiceStyleDialog.title("Paper style options")
 
@@ -253,12 +306,16 @@ def stylePractice():
 
     leftMarginScale = Scale(practiceStyleDialog, label = "Set left margin", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "horizontal", variable = leftMargin)
     rightMarginScale = Scale(practiceStyleDialog, label = "Set right margin", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "horizontal", variable =rightMargin)
+    marginColorSelector = OptionMenu(practiceStyleDialog, marginColorInput, "Black", "Blue", "Red")
+    marginColorLabel = Label(practiceStyleDialog, text = "Margin color")
     leftMarginScale.set(20)
     rightMarginScale.set(20)
     leftMarginCB.pack()
     leftMarginScale.pack()
     rightMarginCB.pack()
     rightMarginScale.pack()
+    marginColorLabel.pack()
+    marginColorSelector.pack()
     practiceSpacingSlider = Scale(practiceStyleDialog, label = "Set line spacing", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "horizontal", variable = practiceRuleSpacing)
 
     practiceSpacingSlider.pack()
@@ -278,10 +335,10 @@ def styleMusic():
         global paperStyle, sheetSpacingLg, sheetSpacingSm
         paintArea.delete("paper")
         setMargins()
-
+       
         for sheetLineY in range(30, 1000, sheetSpacingLg.get() + (5 * sheetSpacingSm.get())):
             for sheetRuleY in range(sheetLineY, sheetLineY + (sheetSpacingSm.get() * 5), sheetSpacingSm.get()):
-                paintArea.create_line(-800, sheetRuleY, 5000, sheetRuleY, fill = "black", tags = ("paper"))
+                paintArea.create_line(-800, sheetRuleY, 1000, sheetRuleY, fill = "black", tags = ("paper"))
 
         paperStyle = "music"
 
@@ -296,12 +353,16 @@ def styleMusic():
 
     leftMarginScale = Scale(musicStyleDialog, label = "Set left margin", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "horizontal", variable = leftMargin)
     rightMarginScale = Scale(musicStyleDialog, label = "Set right margin", from_ = 10, to = 50, resolution = 1, tickinterval = 10, orient = "horizontal", variable =rightMargin)
+    marginColorSelector = OptionMenu(musicStyleDialog, marginColorInput, "Black", "Blue", "Red")
+    marginColorLabel = Label(musicStyleDialog, text = "Margin color")
     leftMarginScale.set(20)
     rightMarginScale.set(20)
     leftMarginCB.pack()
     leftMarginScale.pack()
     rightMarginCB.pack()
     rightMarginScale.pack()
+    marginColorLabel.pack()
+    marginColorSelector.pack()
 
     largeSpacingScale = Scale(musicStyleDialog, label = "Gap between rows", from_ = 20, to = 70, resolution = 1, tickinterval = 10, orient = "horizontal", variable = sheetSpacingLg)
     largeSpacingScale.pack()
@@ -329,7 +390,7 @@ message = Label(mainWindow, text = "Ink Flow")
 message.pack()
 
 #set the ink color menu
-colorMenu = Menu(mainWindow, tearoff = True)
+colorMenu = Menu(mainWindow, tearoff = True, title = "Ink tray")
 colorMenu.add_command(label = "Ink Blue", command = setColorBlue)
 colorMenu.add_command(label = "Calligraphic Black", command = setColorBlack)
 colorMenu.add_command(label = "Electric Blue", command = setColorLtBlue)
@@ -337,12 +398,24 @@ colorMenu.add_command(label = "Royal Purple", command = setColorPurple)
 colorMenu.add_command(label = "Important Red", command = setColorRed)
 colorMenu.add_command(label = "Natural Green", command = setColorGreen)
 colorMenu.add_command(label = "Fruity Orange", command = setColorOrange)
+"""
+#Wanted to add some Easter colors but they aren't working (unknown reason)
+
+colorMenu.add_command(label = "Spring Green (Easter Edition)", command = "setColorEasterGreen")
+colorMenu.add_command(label = "Bunny Purple (Easter Edition)", command = "setColorEasterPurple")
+colorMenu.add_command(label = "Chocolate Foil Pink (Easter Edition)", command = "setColorEasterPink")
+colorMenu.add_command(label = "Flower Blue (Easter Edition)", command = "setColorEasterBlue")
+colorMenu.add_command(label = "Egg Yellow (Easter Edition)", command = "setColorEasterYellow")
+"""
 
 #sset the paper color and style menus
 paperMenu = Menu(mainWindow, tearoff = False)
 paperMenu.add_command(label = "White Copy", command = setPaperWhite)
 paperMenu.add_command(label = "Antique", command = setPaperAntique)
 paperMenu.add_command(label = "Recycled Gray", command = setPaperGray)
+paperMenu.add_separator()
+paperMenu.add_command(label = "Grass Green (Easter Edition)", command = setPaperEasterGreen)
+paperMenu.add_command(label = "Bright Yellow (Easter Edition)", command = setPaperEasterYellow)
 
 styleMenu = Menu(mainWindow, tearoff = False)
 styleMenu.add_command(label = "Plain", command = stylePlain)
