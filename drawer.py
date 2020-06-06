@@ -19,6 +19,10 @@ rey = 0 # Rule end y coord
 cex = 0 # Circle center x
 ccy = 0 # circle center y
 cey = 0 # circle top edge y
+rvx1 = 0 # rectange vortex 1 coords
+rvy1 = 0
+rvx2 = 0 #rectangle vortex 2 coords
+rvy2 = 0
 
 marginColors = {
     "Black": "black",
@@ -40,8 +44,13 @@ def setTool_Circle():
     activeTool = "circle"
     toPlace = "circleCenter"
 
+def setTool_Rect():
+    global activeTool, toPlace
+    activeTool = "rect"
+    toPlace = "vortex1"
+
 def onClick(event):
-    global toPlace, rbx, rby, rex, rey, ccx, ccy, cvx, cvy
+    global toPlace, rbx, rby, rex, rey, ccx, ccy, cvx, cvy, rvx1, rvx2, rvy1, rvy2
     if activeTool == "rule":
         if toPlace == "rb":
             rbx = event.x
@@ -62,10 +71,18 @@ def onClick(event):
             cex = ccx - (ccy - cey)
             cex2 = ccx + (ccx - cex) # bottom left vortex coords
             cey2 = ccy + (ccy - cey)
-            paintArea.create_oval(cex, cey, cex2, cey2, outline = inkColor, width = brushSize.get())
+            paintArea.create_oval(cex, cey, cex2, cey2, outline = inkColor, width = brushSize.get() * 2)
             toPlace = "circleCenter"
-
-
+    elif activeTool == "rect":
+        if toPlace == "vortex1":
+            rvx1 = event.x
+            rvy1 = event.y
+            toPlace = "vortex2"
+        else:
+            rvx2 = event.x
+            rvy2 = event.y
+            paintArea.create_rectangle(rvx1, rvy1, rvx2, rvy2, outline = inkColor, width = brushSize.get() * 2)
+            toPlace = "vortex1"
 
 #set the horizontal rules for both ruled and grid styles
 def setHorizontalRuling(spacing):
@@ -448,6 +465,7 @@ toolMenu = Menu(mainWindow, tearoff = True)
 toolMenu.add_command(label = "Pen", command = SetTool_Pen)
 toolMenu.add_command(label = "Rule", command = setTool_Rule)
 toolMenu.add_command(label = "Circle", command = setTool_Circle)
+toolMenu.add_command(label = "Rectangle", command = setTool_Rect)
 
 
 actionBar = Menu(mainWindow)
