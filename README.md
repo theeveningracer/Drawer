@@ -1,8 +1,8 @@
-# Calligraphic-Paint
-A calligraphic pen simulator program. Includes adjustable ink flow, four paper styles on three paper types and a selection
-of real ink-inspired brush colors.
+# Drawer
+A pen-and-paper simulator program. Includes adjustable ink flow (affects line width and solidity), five paper ruling styles on three paper stock types and a selection
+of pen ink-inspired brush colors.
 
-It simulates a real calligraphic pen by leaving marks more dense when swept slowly.
+To leave marks more dense, swipe the mouse slower.
 
 Paper styles included:
 - plain
