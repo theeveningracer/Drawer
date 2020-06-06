@@ -8,11 +8,45 @@ paperStyle = "plain"
 
 marginColor = "black"
 
+activeTool = "pen"
+
+toPlace = "rb" # Variable to place on click
+
+rbx = 0  # Rule begin x coord
+rex = 0 # Rule end x coord
+rby = 0 # Rule begin y coord
+rey = 0 # Rule end y coord
+
 marginColors = {
     "Black": "black",
     "Blue": "#009CFF",
     "Red": "#FF0048"
 }
+
+def SetTool_Pen():
+    global activeTool
+    activeTool = "pen"
+
+def setTool_Rule():
+    global activeTool, rbx, rby, rex, rey, toPlace
+    activeTool = "rule"
+    toPlace = "rb"
+
+
+
+
+def onClick(event):
+    global toPlace, rbx, rby, rex, rey
+    if activeTool == "rule":
+        if toPlace == "rb":
+            rbx = event.x
+            rby = event.y
+            toPlace = "re" # Specifies the next thing to place: the rule end.
+        else:
+            rex = event.x
+            rey = event.y
+            paintArea.create_line(rbx, rby, rex, rey, fill = inkColor, width = brushSize.get() * 2)
+            toPlace = "rb"
 
 
 
@@ -362,7 +396,8 @@ def styleMusic():
 paintArea = Canvas(mainWindow, width = canvasWidth, height = canvasHeight, bg = paperColor)
 paintArea.pack(fill = "both")
 
-paintArea.bind( "<B1-Motion>", paint)
+paintArea.bind( "<B1-Motion>", paint) # Binding for pen action
+paintArea.bind("<Button>", onClick)  # This is the binding for non-pen tools' usage
 
 message = Label(mainWindow, text = "Ink Flow")
 message.pack()
@@ -392,9 +427,15 @@ styleMenu.add_command(label = "Grid", command = styleGrid)
 styleMenu.add_command(label = "Music Sheet", command = styleMusic)
 styleMenu.add_command(label = "Writing Practice", command = stylePractice)
 
+toolMenu = Menu(mainWindow, tearoff = True)
+toolMenu.add_command(label = "Pen", command = SetTool_Pen)
+toolMenu.add_command(label = "Rule", command = setTool_Rule)
+
+
 actionBar = Menu(mainWindow)
 actionBar.add_command(label = "Clear", command = clear)
 actionBar.add_cascade(label = "Change Ink", menu = colorMenu)
+actionBar.add_cascade(label = "Tool: " + activeTool, menu = toolMenu)
 actionBar.add_cascade(label = "Switch Paper", menu = paperMenu)
 actionBar.add_cascade(label = "Paper Style", menu = styleMenu)
 actionBar.add_command(label = "About", command = openCredits)
