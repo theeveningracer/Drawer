@@ -16,6 +16,9 @@ rbx = 0  # Rule begin x coord
 rex = 0 # Rule end x coord
 rby = 0 # Rule begin y coord
 rey = 0 # Rule end y coord
+cex = 0 # Circle center x
+ccy = 0 # circle center y
+cey = 0 # circle top edge y
 
 marginColors = {
     "Black": "black",
@@ -32,11 +35,13 @@ def setTool_Rule():
     activeTool = "rule"
     toPlace = "rb"
 
-
-
+def setTool_Circle():
+    global activeTool, ccx, ccy, cey, toPlace
+    activeTool = "circle"
+    toPlace = "circleCenter"
 
 def onClick(event):
-    global toPlace, rbx, rby, rex, rey
+    global toPlace, rbx, rby, rex, rey, ccx, ccy, cvx, cvy
     if activeTool == "rule":
         if toPlace == "rb":
             rbx = event.x
@@ -47,7 +52,18 @@ def onClick(event):
             rey = event.y
             paintArea.create_line(rbx, rby, rex, rey, fill = inkColor, width = brushSize.get() * 2)
             toPlace = "rb"
-
+    elif activeTool == "circle":
+        if toPlace == "circleCenter":
+            ccx = event.x
+            ccy = event.y
+            toPlace = "circleEdge"
+        else:
+            cey = event.y
+            cex = ccx - (ccy - cey)
+            cex2 = ccx + (ccx - cex) # bottom left vortex coords
+            cey2 = ccy + (ccy - cey)
+            paintArea.create_oval(cex, cey, cex2, cey2, outline = inkColor, width = brushSize.get())
+            toPlace = "circleCenter"
 
 
 
@@ -81,6 +97,7 @@ practiceRuleSpacing = IntVar()
 marginColorInput = StringVar()
 
 brushSize = DoubleVar()
+
 
 def paint(event):
     x1, y1 = (event.x - brushSize.get()), (event.y - brushSize.get())
@@ -430,14 +447,15 @@ styleMenu.add_command(label = "Writing Practice", command = stylePractice)
 toolMenu = Menu(mainWindow, tearoff = True)
 toolMenu.add_command(label = "Pen", command = SetTool_Pen)
 toolMenu.add_command(label = "Rule", command = setTool_Rule)
+toolMenu.add_command(label = "Circle", command = setTool_Circle)
 
 
 actionBar = Menu(mainWindow)
 actionBar.add_command(label = "Clear", command = clear)
-actionBar.add_cascade(label = "Change Ink", menu = colorMenu)
-actionBar.add_cascade(label = "Tool: " + activeTool, menu = toolMenu)
-actionBar.add_cascade(label = "Switch Paper", menu = paperMenu)
-actionBar.add_cascade(label = "Paper Style", menu = styleMenu)
+actionBar.add_cascade(label = "Change ink", menu = colorMenu)
+actionBar.add_cascade(label = "Select tool", menu = toolMenu)
+actionBar.add_cascade(label = "Switch paper", menu = paperMenu)
+actionBar.add_cascade(label = "Paper style", menu = styleMenu)
 actionBar.add_command(label = "About", command = openCredits)
 
 mainWindow.config(menu = actionBar)
