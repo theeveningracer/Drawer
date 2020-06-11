@@ -81,7 +81,7 @@ def onClick(event):
         else:
             rex = event.x
             rey = event.y
-            paintArea.create_line(rbx, rby, rex, rey, fill = inkColor, width = brushSize.get() * 2)
+            paintArea.create_line(rbx, rby, rex, rey, fill = inkColor, width = brushSize.get() * 2, tags = ("ink"))
             toPlace = "rb"
     elif activeTool == "circle":
         if toPlace == "circleCenter":
@@ -93,7 +93,7 @@ def onClick(event):
             cex = ccx - (ccy - cey)
             cex2 = ccx + (ccx - cex) # bottom left vortex coords
             cey2 = ccy + (ccy - cey)
-            paintArea.create_oval(cex, cey, cex2, cey2, outline = inkColor, width = brushSize.get() * 2)
+            paintArea.create_oval(cex, cey, cex2, cey2, outline = inkColor, width = brushSize.get() * 2, tags = ("ink"))
             toPlace = "circleCenter"
     elif activeTool == "rect":
         if toPlace == "vortex1":
@@ -103,7 +103,7 @@ def onClick(event):
         else:
             rvx2 = event.x
             rvy2 = event.y
-            paintArea.create_rectangle(rvx1, rvy1, rvx2, rvy2, outline = inkColor, width = brushSize.get() * 2)
+            paintArea.create_rectangle(rvx1, rvy1, rvx2, rvy2, outline = inkColor, width = brushSize.get() * 2, tags = ("ink"))
             toPlace = "vortex1"
     elif activeTool == "oval":
         if toPlace == "vortex1":
@@ -113,7 +113,7 @@ def onClick(event):
         else :
             ovx2 = event.x
             ovy2 = event.y
-            paintArea.create_oval(ovx1, ovy1, ovx2, ovy2, outline = inkColor, width = brushSize.get() * 2)
+            paintArea.create_oval(ovx1, ovy1, ovx2, ovy2, outline = inkColor, width = brushSize.get() * 2, tags = ("ink"))
             toPlace = "vortex1"
     elif activeTool == "text":
         tx = event.x
@@ -122,7 +122,7 @@ def onClick(event):
 
         def placeText():
             global textToPlace
-            paintArea.create_text(tx, ty, text = textToPlace.get(), font = ("Arial", textFontSize.get()), fill = inkColor)
+            paintArea.create_text(tx, ty, text = textToPlace.get(), font = ("Arial", textFontSize.get()), fill = inkColor, tags = ("ink"))
             textWindow.destroy()
 
         textWindow = Toplevel(mainWindow)
