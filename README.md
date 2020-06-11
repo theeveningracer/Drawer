@@ -11,6 +11,13 @@ Paper styles included:
 - music sheet
 - writing practice sheet
 
+Tools included
+- pen
+- circle
+- rectangle
+- oval
+- text
+
 Write any suggestions in Issues
 
 **_Important: You need a Python compiler/interpreter to run this .py file._**
