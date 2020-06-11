@@ -10,8 +10,6 @@ marginColor = "black"
 
 activeTool = "pen"
 
-activeTool = "text" # TESTING
-
 toPlace = "rb" # Variable to place on click
 
 rbx = 0  # Rule begin x coord
@@ -42,26 +40,36 @@ marginColors = {
 def SetTool_Pen():
     global activeTool
     activeTool = "pen"
+    paintArea.config(cursor = "pencil")
 
 def setTool_Rule():
     global activeTool, rbx, rby, rex, rey, toPlace
     activeTool = "rule"
     toPlace = "rb"
+    paintArea.config(cursor = "crosshair")
 
 def setTool_Circle():
     global activeTool, ccx, ccy, cey, toPlace
     activeTool = "circle"
     toPlace = "circleCenter"
+    paintArea.config(cursor = "crosshair")
 
 def setTool_Rect():
     global activeTool, toPlace
     activeTool = "rect"
     toPlace = "vortex1"
+    paintArea.config(cursor = "crosshair")
 
 def setTool_Oval():
     global activeTool, toPlace
     activeTool = "oval"
     toPlace = "vortex1"
+    paintArea.config(cursor = "crosshair")
+
+def setTool_Text():
+    global activeTool
+    activeTool = "text"
+    paintArea.config(cursor = "crosshair")
 
 def onClick(event):
     global toPlace, rbx, rby, rex, rey, ccx, ccy, cvx, cvy, rvx1, rvx2, rvy1, rvy2, ovx1, ovx2, ovy1, ovy2, tx, ty
@@ -111,18 +119,23 @@ def onClick(event):
         tx = event.x
         ty = event.y
 
+
         def placeText():
             global textToPlace
-            paintArea.create_text(tx, ty, text = textToPlace.get())
+            paintArea.create_text(tx, ty, text = textToPlace.get(), font = ("Arial", textFontSize.get()), fill = inkColor)
             textWindow.destroy()
 
         textWindow = Toplevel(mainWindow)
-        textWindow.geometry("500x500+" + str(tx) + "+" + str(ty))
+        textWindow.geometry("200x100+" + str(tx) + "+" + str(ty))
+        textWindow.title("Insert text")
         textEntry = Entry(textWindow, textvariable = textToPlace)
-        textPlaceBttn = Button(textWindow, text = "Enter", bg = "green", relief = "raised", command = placeText)
+        textPlaceBttn = Button(textWindow, text = "Enter", bg = "green", fg = "white", relief = "raised", command = placeText)
         textEntry.focus_set()
+        fontSizeScale = Scale(textWindow, label = "Font size", variable = textFontSize, from_ = 5, to = 50, resolution = 1, tickinterval = 5, orient = "horizontal", length = 200)
+        fontSizeScale.set(20)
 
         textEntry.pack()
+        fontSizeScale.pack()
         textPlaceBttn.pack()
 
 #set the horizontal rules for both ruled and grid styles
@@ -157,6 +170,7 @@ marginColorInput = StringVar()
 brushSize = DoubleVar()
 
 textToPlace = StringVar()
+textFontSize = StringVar()
 
 
 def paint(event):
@@ -186,7 +200,7 @@ def openCredits():
 
 def openHelp():
     helpWindow = Toplevel(mainWindow)
-    helpText = Label(helpWindow, text = "How to use tools\n\nPen\nHold mouse button while dragging mouse.\n\nRule\nClick the endpoints of the desired straight line.\n\nCircle\nClick the center and highest/lowest y coordinate of the circle.\n\nRectangle and Oval\nClick the top left and bottom right corners of the desired rectangle/rectangle containing the oval.")
+    helpText = Label(helpWindow, text = "How to use tools\n\nPen\nHold mouse button while dragging mouse.\n\nRule\nClick the endpoints of the desired straight line.\n\nCircle\nClick the center and highest/lowest y coordinate of the circle.\n\nRectangle and Oval\nClick the top left and bottom right corners of the desired rectangle/rectangle containing the oval.\n\nText\nClick where you want to put the text. In the appearing window, write the text then click \"Enter\" on the screen.")
     helpText.pack()
 
 def setColorBlue():
@@ -475,7 +489,7 @@ def styleMusic():
 
 
 
-paintArea = Canvas(mainWindow, width = canvasWidth, height = canvasHeight, bg = paperColor)
+paintArea = Canvas(mainWindow, width = canvasWidth, height = canvasHeight, bg = paperColor, cursor = "pencil")
 paintArea.pack(fill = "both")
 
 paintArea.bind( "<B1-Motion>", paint) # Binding for pen action
@@ -515,6 +529,7 @@ toolMenu.add_command(label = "Rule", command = setTool_Rule)
 toolMenu.add_command(label = "Circle", command = setTool_Circle)
 toolMenu.add_command(label = "Rectangle", command = setTool_Rect)
 toolMenu.add_command(label = "Oval", command = setTool_Oval)
+toolMenu.add_command(label = "Text", command = setTool_Text)
 
 aboutAndHelp = Menu(mainWindow, tearoff = False)
 aboutAndHelp.add_command(label = "About", command = openCredits)
@@ -531,6 +546,7 @@ actionBar.add_cascade(label = "Help & About", menu = aboutAndHelp)
 mainWindow.config(menu = actionBar)
 
 brushSizeScale = Scale(mainWindow, variable = brushSize, from_ = 1.0, to = 5.0, orient = "horizontal", length = canvasWidth, tickinterval = 1, resolution = 0.1)
+brushSizeScale.set(3.0)
 brushSizeScale.pack()
 
 
