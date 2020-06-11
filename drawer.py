@@ -10,6 +10,8 @@ marginColor = "black"
 
 activeTool = "pen"
 
+activeTool = "text" # TESTING
+
 toPlace = "rb" # Variable to place on click
 
 rbx = 0  # Rule begin x coord
@@ -27,6 +29,9 @@ ovx1 = 0 # Oval vortex 1 coords
 ovy1 = 0
 ovx2 = 0 # Oval vortex 2 coords
 ovy2 = 0
+tx = 0 # Text coords
+ty = 0
+ # Text to place with text tool
 
 marginColors = {
     "Black": "black",
@@ -59,7 +64,7 @@ def setTool_Oval():
     toPlace = "vortex1"
 
 def onClick(event):
-    global toPlace, rbx, rby, rex, rey, ccx, ccy, cvx, cvy, rvx1, rvx2, rvy1, rvy2, ovx1, ovx2, ovy1, ovy2
+    global toPlace, rbx, rby, rex, rey, ccx, ccy, cvx, cvy, rvx1, rvx2, rvy1, rvy2, ovx1, ovx2, ovy1, ovy2, tx, ty
     if activeTool == "rule":
         if toPlace == "rb":
             rbx = event.x
@@ -102,7 +107,23 @@ def onClick(event):
             ovy2 = event.y
             paintArea.create_oval(ovx1, ovy1, ovx2, ovy2, outline = inkColor, width = brushSize.get() * 2)
             toPlace = "vortex1"
+    elif activeTool == "text":
+        tx = event.x
+        ty = event.y
 
+        def placeText():
+            global textToPlace
+            paintArea.create_text(tx, ty, text = textToPlace.get())
+            textWindow.destroy()
+
+        textWindow = Toplevel(mainWindow)
+        textWindow.geometry("500x500+" + str(tx) + "+" + str(ty))
+        textEntry = Entry(textWindow, textvariable = textToPlace)
+        textPlaceBttn = Button(textWindow, text = "Enter", bg = "green", relief = "raised", command = placeText)
+        textEntry.focus_set()
+
+        textEntry.pack()
+        textPlaceBttn.pack()
 
 #set the horizontal rules for both ruled and grid styles
 def setHorizontalRuling(spacing):
@@ -134,6 +155,8 @@ practiceRuleSpacing = IntVar()
 marginColorInput = StringVar()
 
 brushSize = DoubleVar()
+
+textToPlace = StringVar()
 
 
 def paint(event):
