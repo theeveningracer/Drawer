@@ -179,7 +179,21 @@ def paint(event):
     paintArea.create_oval(x1, y1, x2, y2, fill = inkColor, outline = "", tags = ("ink"))
 
 def clear():
-    paintArea.delete("ink")
+    def clearInk():
+        paintArea.delete("ink")
+        clearConfirmationDialog.destroy()
+        clearConfirmationDialog.destroy()
+
+    clearConfirmationDialog = Toplevel(mainWindow)
+    clearConfirmationDialog.title("Clear table")
+    sureText = Label(clearConfirmationDialog, text = "Clear the whole sheet?")
+    cancelBttn = Button(clearConfirmationDialog, text = "Cancel", command = clearConfirmationDialog.destroy)
+    confirmButton = Button(clearConfirmationDialog, text = "Clear", command = clearInk, fg = "white", bg = "red", relief = "raised")
+
+
+    sureText.pack()
+    cancelBttn.pack()
+    confirmButton.pack()
 
 def setMargins():
     global marginColor, marginColorInput
