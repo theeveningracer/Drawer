@@ -197,7 +197,7 @@ def clear():
 
 def setMargins():
     global marginColor, marginColorInput
-    if marginColorInput.get() in marginColors:
+    if marginColorInput.get():
         marginColor = marginColors[marginColorInput.get()]
     mainWindow.update()
     canvasWidth = mainWindow.winfo_width()
@@ -261,7 +261,6 @@ def stylePlain():
 
     def setPlainStyle():
         global paperStyle, marginColor
-        marginColor = marginColors[marginColorInput.get()]
         paintArea.delete("paper")
         setMargins()
         paperStyle = "plain"
@@ -290,7 +289,7 @@ def stylePlain():
     marginColorSelector.pack()
 
     cancelButton = Button(plainStyleDialog, text = "Cancel", command =plainStyleDialog.destroy)
-    applyButton = Button(plainStyleDialog, text = "Apply", relief = "raised", bg = "green", command = setPlainStyle)
+    applyButton = Button(plainStyleDialog, text = "Apply", relief = "raised", bg = "green", fg = "white", command = setPlainStyle)
 
 
 
