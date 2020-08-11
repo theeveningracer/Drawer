@@ -77,16 +77,19 @@ def onClick(event):
         if toPlace == "rb":
             rbx = event.x
             rby = event.y
+            drawHelperCross(rbx, rby)
             toPlace = "re" # Specifies the next thing to place: the rule end.
         else:
             rex = event.x
             rey = event.y
             paintArea.create_line(rbx, rby, rex, rey, fill = inkColor, width = brushSize.get() * 2, tags = ("ink"))
+            clearHelperCross()
             toPlace = "rb"
     elif activeTool == "circle":
         if toPlace == "circleCenter":
             ccx = event.x
             ccy = event.y
+            drawHelperCross(ccx, ccy)
             toPlace = "circleEdge"
         else:
             cey = event.y
@@ -94,31 +97,35 @@ def onClick(event):
             cex2 = ccx + (ccx - cex) # bottom left vortex coords
             cey2 = ccy + (ccy - cey)
             paintArea.create_oval(cex, cey, cex2, cey2, outline = inkColor, width = brushSize.get() * 2, tags = ("ink"))
+            clearHelperCross()
             toPlace = "circleCenter"
     elif activeTool == "rect":
         if toPlace == "vortex1":
             rvx1 = event.x
             rvy1 = event.y
+            drawHelperCross(rvx1, rvy1)
             toPlace = "vortex2"
         else:
             rvx2 = event.x
             rvy2 = event.y
             paintArea.create_rectangle(rvx1, rvy1, rvx2, rvy2, outline = inkColor, width = brushSize.get() * 2, tags = ("ink"))
+            clearHelperCross()
             toPlace = "vortex1"
     elif activeTool == "oval":
         if toPlace == "vortex1":
             ovx1 = event.x
             ovy1 = event.y
+            drawHelperCross(ovx1,  ovy1)
             toPlace = "vortex2"
         else :
             ovx2 = event.x
             ovy2 = event.y
             paintArea.create_oval(ovx1, ovy1, ovx2, ovy2, outline = inkColor, width = brushSize.get() * 2, tags = ("ink"))
+            clearHelperCross()
             toPlace = "vortex1"
     elif activeTool == "text":
         tx = event.x
         ty = event.y
-
 
         def placeText():
             global textToPlace
@@ -216,6 +223,15 @@ def openHelp():
     helpWindow = Toplevel(mainWindow)
     helpText = Label(helpWindow, text = "How to use tools\n\nPen\nHold mouse button while dragging mouse.\n\nRule\nClick the endpoints of the desired straight line.\n\nCircle\nClick the center and highest/lowest y coordinate of the circle.\n\nRectangle and Oval\nClick the top left and bottom right corners of the desired rectangle/rectangle containing the oval.\n\nText\nClick where you want to put the text. In the appearing window, write the text then click \"Enter\" on the screen.")
     helpText.pack()
+
+def drawHelperCross(x, y):
+    #Draws a cross at the beginning of planned shape when using one of the shape tools
+    paintArea.create_line(x-5, y-5, x+5, y+5, fill = "lime", tags = ("helper"))
+    paintArea.create_line(x-5, y+5, x+5, y-5, fill = "lime", tags = ("helper"))
+
+def clearHelperCross():
+    #Clears the helper cross when the shape is completed
+    paintArea.delete("helper")
 
 def setColorBlue():
     global inkColor
