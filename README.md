@@ -20,4 +20,4 @@ Tools included
 
 Write any suggestions in Issues
 
-**_Important: You need a Python interpreter to run this .py file._**
+**_Important: You need a Python interpreter with TkInter installed to run this .py file._**
