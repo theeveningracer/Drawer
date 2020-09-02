@@ -133,7 +133,7 @@ def onClick(event):
             textWindow.destroy()
 
         textWindow = Toplevel(mainWindow)
-        textWindow.geometry("200x100+" + str(tx) + "+" + str(ty))
+        textWindow.geometry("200x200+" + str(tx) + "+" + str(ty))
         textWindow.title("Insert text")
         textEntry = Entry(textWindow, textvariable = textToPlace)
         textPlaceBttn = Button(textWindow, text = "Enter", bg = "green", fg = "white", relief = "raised", command = placeText)
