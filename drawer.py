@@ -23,7 +23,7 @@ rvx1 = 0 # rectange vortex 1 coords
 rvy1 = 0
 rvx2 = 0 #rectangle vortex 2 coords
 rvy2 = 0
-ovx1 = 0 # Oval vortex 1 coords
+ovx1 = 0 # Oval vortex 1 coordsy
 ovy1 = 0
 ovx2 = 0 # Oval vortex 2 coords
 ovy2 = 0
@@ -36,6 +36,7 @@ marginColors = {
     "Blue": "#009CFF",
     "Red": "#FF0048"
 }
+
 
 def SetTool_Pen():
     global activeTool
@@ -133,6 +134,7 @@ def onClick(event):
             textWindow.destroy()
 
         textWindow = Toplevel(mainWindow)
+        textWindow.attributes("-type", "float")
         textWindow.geometry("200x200+" + str(tx) + "+" + str(ty))
         textWindow.title("Insert text")
         textEntry = Entry(textWindow, textvariable = textToPlace)
@@ -192,6 +194,7 @@ def clear():
         clearConfirmationDialog.destroy()
 
     clearConfirmationDialog = Toplevel(mainWindow)
+    clearConfirmationDialog.attributes("-type", "float")
     clearConfirmationDialog.title("Clear table")
     sureText = Label(clearConfirmationDialog, text = "Clear the whole sheet?")
     cancelBttn = Button(clearConfirmationDialog, text = "Cancel", command = clearConfirmationDialog.destroy)
@@ -215,12 +218,14 @@ def setMargins():
 
 def openCredits():
     creditsWindow = Toplevel(mainWindow)
+    creditsWindow.attributes("-type", "float")
     creditsWindow.title("Credits and license")
     creditsText = Label(creditsWindow, text = "Drawer (formerly Calligraphic Paint) is an application created in 2020 by Redline Software, a Redline Network company. \n Open source software freely usable for any non-commercial purposes.")
     creditsText.pack()
 
 def openHelp():
     helpWindow = Toplevel(mainWindow)
+    creditsWindow.attributes("-type", "float")
     helpText = Label(helpWindow, text = "How to use tools\n\nPen\nHold mouse button while dragging mouse.\n\nRule\nClick the endpoints of the desired straight line.\n\nCircle\nClick the center and highest/lowest y coordinate of the circle.\n\nRectangle and Oval\nClick the top left and bottom right corners of the desired rectangle/rectangle containing the oval.\n\nText\nClick where you want to put the text. In the appearing window, write the text then click \"Enter\" on the screen.")
     helpText.pack()
 
@@ -286,6 +291,7 @@ def stylePlain():
 
 
     plainStyleDialog = Toplevel(mainWindow)
+    plainStyleDialog.attributes("-type", "float")
     plainStyleDialog.title("Paper style options")
 
     leftMarginCB = Checkbutton(plainStyleDialog, text = "Left Margin", variable = hasLeftMargin)
@@ -327,6 +333,8 @@ def styleRuled():
 
     #define the ruled style dialog
     ruledStyleDialog = Toplevel(mainWindow)
+    ruledStyleDialog.attributes("-type", "float")
+
     ruledStyleDialog.title("Ruled style options")
 
     leftMarginCB = Checkbutton(ruledStyleDialog, text = "Left Margin", variable = hasLeftMargin)
@@ -376,6 +384,8 @@ def styleGrid():
 
     #define the grid style dialog
     gridStyleDialog = Toplevel(mainWindow)
+    gridStyleDialog.attributes("-type", "float")
+
     gridStyleDialog.title("Grid style options")
 
     leftMarginCB = Checkbutton(gridStyleDialog, text = "Left Margin", variable = hasLeftMargin)
@@ -436,6 +446,8 @@ def stylePractice():
 
 
     practiceStyleDialog = Toplevel(mainWindow)
+    practiceStyleDialog.attributes("-type", "float")
+
     practiceStyleDialog.title("Paper style options")
 
     leftMarginCB = Checkbutton(practiceStyleDialog, text = "Left Margin", variable = hasLeftMargin)
@@ -483,6 +495,8 @@ def styleMusic():
 
     #define the music style dialog
     musicStyleDialog = Toplevel(mainWindow)
+    musicStyleDialog.attributes("-type", "float")
+
     musicStyleDialog.title("Paper style options")
 
     leftMarginCB = Checkbutton(musicStyleDialog, text = "Left Margin", variable = hasLeftMargin)
@@ -519,7 +533,7 @@ def styleMusic():
 
 
 paintArea = Canvas(mainWindow, width = canvasWidth, height = canvasHeight, bg = paperColor, cursor = "pencil")
-paintArea.pack(fill = "both")
+paintArea.pack(fill = "both", expand = True)
 
 paintArea.bind( "<B1-Motion>", paint) # Binding for pen action
 paintArea.bind("<Button>", onClick)  # This is the binding for non-pen tools' usage
